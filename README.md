@@ -58,3 +58,20 @@ RUN npm run build
 FROM nginx
 COPY --from=builder /app/build /usr/share/nginx/html
 ```
+
+# travis
+
+.travis.yml
+
+```
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jonsoku2/study_tamastudy_full_calendar -f Dockerfile.dev .
+
+scripts:
+  - docker run -e CI=true jonsoku2/study_tamastudy_full_calendar npm run test
+
+```
