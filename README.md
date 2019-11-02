@@ -1,68 +1,71 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## docker build
 
-## Available Scripts
+```bash
+docker build -f Dockerfile.dev .
+```
 
-In the project directory, you can run:
+## delete node_modules
 
-### `yarn start`
+```bash
+rm -rf node_modules/
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## docker run
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```bash
+docker run -p 3000:3000 fbec68cb5e1a
+```
 
-### `yarn test`
+## docker volumes
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app fbec68cb5e1a
+```
 
-### `yarn build`
+## docker-compose.yml
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```docker
+version: "3"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# test
 
-### `yarn eject`
+## docker build
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+docker build -f Dockerfile.dev .
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## npm run test
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+docker run 1d921020aa81 npm run test
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## docker run -it
 
-## Learn More
+```bash
+docker run -it eea7809d8b38 npm run test
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## docker-compose up
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## docker ps
 
-### Code Splitting
+## docker exec -it d1a3c38f8233 npm run test
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+# docker compose for running tests
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+##
+# study_tamastudy_full_calendar
