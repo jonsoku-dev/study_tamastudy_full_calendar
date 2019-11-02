@@ -64,6 +64,7 @@ COPY --from=builder /app/build /usr/share/nginx/html
 .travis.yml
 
 ```
+language: generic
 sudo: required
 services:
   - docker
@@ -73,5 +74,4 @@ before_install:
 
 scripts:
   - docker run -e CI=true jonsoku2/study_tamastudy_full_calendar npm run test
-
 ```

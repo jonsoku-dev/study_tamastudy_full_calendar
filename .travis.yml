@@ -8,3 +8,17 @@ before_install:
 
 scripts:
   - docker run -e CI=true jonsoku2/study_tamastudy_full_calendar npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-northeast-1"
+  app: "docker"
+  env: "StudyTamastudyFullCalendar-env"
+  bucket_name: "elasticbeanstalk-ap-northeast-1-475625490253"
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
