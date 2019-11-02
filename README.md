@@ -1,25 +1,20 @@
-## docker build
+# dev
 
-```bash
-docker build -f Dockerfile.dev .
-```
+## Dockerfile
 
-## delete node_modules
+Dockerfile.dev
 
-```bash
-rm -rf node_modules/
-```
+```docker
+FROM node:alpine
 
-## docker run
+WORKDIR '/app'
 
-```bash
-docker run -p 3000:3000 fbec68cb5e1a
-```
+COPY package.json .
+RUN npm install
 
-## docker volumes
+COPY . .
 
-```bash
-docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app fbec68cb5e1a
+CMD ["npm", "run", "start"]
 ```
 
 ## docker-compose.yml
@@ -37,35 +32,31 @@ services:
       - /app/node_modules
       - .:/app
 
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
+
 ```
 
-# test
+# build
 
-## docker build
+Dockerfile
 
-```bash
-docker build -f Dockerfile.dev .
+```docker
+FROM node:alpine as builder
+WORKDIR '/app'
+COPY package.json .
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM nginx
+COPY --from=builder /app/build /usr/share/nginx/html
+
+
 ```
-
-## npm run test
-
-```bash
-docker run 1d921020aa81 npm run test
-```
-
-## docker run -it
-
-```bash
-docker run -it eea7809d8b38 npm run test
-```
-
-## docker-compose up
-
-## docker ps
-
-## docker exec -it d1a3c38f8233 npm run test
-
-# docker compose for running tests
-
-##
-# study_tamastudy_full_calendar
