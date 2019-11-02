@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jonsoku2/study_tamastudy_full_calendar -f Dockerfile.dev .
+
+scripts:
+  - docker run jonsoku2/study_tamastudy_full_calendar npm run test -- --coverage
